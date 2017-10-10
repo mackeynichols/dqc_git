@@ -1,9 +1,14 @@
 3!
 
-Here 
-are
-Changes I
 
-Made
+5 Commit
+Now you can start to modify files in your project. To save changes made in your workspace to your repository, you
+will have to commit them. After changing files in your project, a “>” sign will appear right after the icon, telling you
+the status of these files is dirty. Any parent folder of this file will be marked as dirty as well.
+If you want to commit the changes to your repository, right click the project (or the files you want to commit) and
+select Team => Commit… from your File Explorer. This will open a new window, allowing you
 
-Hello World 
+
+6 Branch
+To create/switch to another branch in a project, from File Explorer right-click your project => Team => Switch
+To and then select either "New Branch" or the name of an existing branch.
