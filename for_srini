@@ -1,0 +1,18 @@
+Hi Srini!
+This is a file I added to our shared remote (online/cloud) repository's master branch.
+
+To do this...
+
+1) I PULL the remote repository's master branch (right-click => Team => Pull) into my local repository. 
+	Doing this updates my workspace with the changes you committed and pushed to our remote repository's master branch.
+	
+2) Next, I make changes to my workspace and commit those changes to my local repository.
+
+3) Next, there's some changes in another branch (mknBranch) that I want to add to our master repo.
+	Specifically, there's this for_srini.txt file I want to add.
+	So, since I've committed my changes from mknBranch to my local repository, I'm going to merge my local mknBranch with my local master branch
+		Remember! My local master branch holds the same content as the remote repository's master branch because I just pulled it!
+	
+4) If there are any conflicts, I will resolve those. Then, I will push my new master branch (with the new file for_srini.txt I merged in)
+
+The changes from my branch are now integrated into our master branch, and our work is now one coherent branch

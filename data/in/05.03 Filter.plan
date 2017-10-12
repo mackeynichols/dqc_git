@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<purity-config version="11.1.0.ga-2017-05-04">
+	<references/>
+	<component-mappings>
+		<propertyMappings/>
+	</component-mappings>
+
+<!-- (Is Ontario) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.conditions.Filter" disabled="false" id="Is Ontario">
+		<properties condition="src_province = &#39;ON&#39;"/>
+		<visual-constraints layout="vertical" bounds="120,192,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="Is Ontario"/>
+		<target endpoint="in" step="Ontario addresses"/>
+		<visual-constraints>
+			<bendpoints>
+				<point location="311,240"/>
+			</bendpoints>
+		</visual-constraints>
+	</connection>
+
+
+
+<!-- (Ontario addresses) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.text.write.TextFileWriter" disabled="false" id="Ontario addresses">
+		<properties writeHeader="true" fileName="../data/out/05.03 Ontario.csv" fieldSeparator=";" generateMetadata="true" stringQualifierEscape="&quot;" writeAllColumns="true" compression="NONE" encoding="UTF-8" lineSeparator="\r\n" stringQualifier="&quot;" useStringQualifierOnAllColumns="false">
+			<columns/>
+			<dataFormatParameters falseValue="false" dateTimeFormat="yyyy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yyyy-MM-dd" trueValue="true" dateFormatLocale="en_US" thousandsSeparator=""/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="288,264,-1,-1"/>
+	</step>
+
+
+
+<!-- (addresses) --><step mode="NORMAL" className="com.ataccama.dqc.tasks.io.text.read.TextFileReader" disabled="false" id="addresses">
+		<properties lineMaxReadLength="65536" fileName="../data/in/addresses.csv" fieldSeparator=";" stringQualifierEscape="&quot;" numberOfLinesInFooter="0" compression="NONE" encoding="UTF-8" lineSeparator="\r\n" stringQualifier="&quot;" numberOfLinesInHeader="1">
+			<columns>
+				<textReaderColumn name="src_street" ignore="false" type="STRING"/>
+				<textReaderColumn name="src_city" ignore="false" type="STRING"/>
+				<textReaderColumn name="src_province" ignore="false" type="STRING"/>
+				<textReaderColumn name="src_zip" ignore="false" type="STRING"/>
+			</columns>
+			<dataFormatParameters falseValue="false" dateTimeFormat="yy-MM-dd HH:mm:ss" decimalSeparator="." dayFormat="yy-MM-dd" trueValue="true" dateFormatLocale="en_US" thousandsSeparator=""/>
+			<errorHandlingStrategy rejectFileName="rejected.txt">
+				<errorInstructions>
+					<errorInstruction dataStrategy="READ_POSSIBLE" errorType="EXTRA_DATA" putToLog="true" putToReject="false"/>
+					<errorInstruction dataStrategy="STOP" errorType="LONG_LINE" putToLog="true" putToReject="true"/>
+					<errorInstruction dataStrategy="STOP" errorType="PROCESSING_ERROR" putToLog="true" putToReject="false"/>
+					<errorInstruction dataStrategy="READ_POSSIBLE" errorType="INVALID_DATE" putToLog="true" putToReject="false"/>
+					<errorInstruction dataStrategy="READ_POSSIBLE" errorType="SHORT_LINE" putToLog="true" putToReject="true"/>
+					<errorInstruction dataStrategy="NULL_VALUE" errorType="UNPARSABLE_FIELD" putToLog="true" putToReject="false"/>
+				</errorInstructions>
+			</errorHandlingStrategy>
+			<shadowColumns/>
+		</properties>
+		<visual-constraints layout="vertical" bounds="48,120,-1,-1"/>
+	</step>
+	<connection className="com.ataccama.dqc.model.elements.connections.StandardFlowConnection" disabled="false">
+		<source endpoint="out" step="addresses"/>
+		<target endpoint="in" step="Is Ontario"/>
+		<visual-constraints>
+			<bendpoints>
+				<point location="71,192"/>
+			</bendpoints>
+		</visual-constraints>
+	</connection>
+
+
+
+<modelComment backgroundColor="219,219,219" borderColor="255,255,255" bounds="240,120,218,102" foregroundColor="0,0,0">Filter:
+    out = only if condition is true
+
+Records not satifying the condition
+are discarded.</modelComment>
+
+
+
+<modelComment backgroundColor="219,219,219" borderColor="255,255,255" bounds="264,336,177,38" foregroundColor="0,0,0">records satisfying condition</modelComment>
+
+
+
+<modelComment backgroundColor="128,255,128" borderColor="255,255,255" bounds="24,24,492,73" foregroundColor="40,0,0">Plan Goals
+The goal of this plan is to write Ontario addresses from the input text file into a separate text file,
+while discarding all other addresses, using the Condition step.</modelComment>
+
+
+
+<modelComment backgroundColor="219,219,219" borderColor="255,255,255" bounds="48,288,135,102" foregroundColor="0,0,0">The steps 
+   Filter, 
+   Extract Filter and 
+   Condition
+are very similar.</modelComment>
+
+</purity-config>
